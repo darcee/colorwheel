@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Color Wheel</title>
+    <script
+      src="https://kit.fontawesome.com/24c54e6626.js"
+      crossorigin="anonymous"
+    ></script>
+<script>
+	var dropToggle = false;
+	var color1 = 'white'; 
+    var color2 = 'white';
+	function dragItem(item) {
+	item.dataTransfer.effectAllowed = "move";	
+	item.dataTransfer.setData("itemID", item.target.id);
+	console.log(item.target.id);
+	}
+	function dropItem(item) {
+    item.preventDefault();
+    var itemID = item.dataTransfer.getData("itemID");
+    console.log('this is here '+itemID);
+    dropToggle = !dropToggle;
+    console.log(dropToggle);
+   	if(dropToggle == true){
+    document.getElementById("drop1icon").style.color = itemID;
+	color1 = itemID;
+    }
+    else{
+    document.getElementById("drop2icon").style.color = itemID;
+    color2 = itemID;		
+    }
+	}
+    function dragoverItem(item) {
+	item.preventDefault();
+	}
+</script>
+
+<style>
+	 .wheelContainer {
+      height: 300px;
+      position: relative;
+    }
+    
+    .wheelBackground {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 100%;
+      box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
+    } 
+    
+    .wheel {
+      transition: all 1s;
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 100%;
+      clip: rect(0px, 150px, 300px, 0px);
+    }
+    
+    .hold {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 100%;
+      clip: rect(0px, 300px, 300px, 150px);
+    }
+    
+    .wheelSegment1a {
+      background-color: WhiteSmoke;
+      transform:rotate(60deg);
+    }
+    
+    #wheelSegment2 {
+      transform: rotate(60deg);
+    }
+    
+    #wheelSegment2 .wheel {
+      background-color: WhiteSmoke;
+      transform: rotate(120deg);
+    }
+    
+    #wheelSegment3 {
+      transform: rotate(120deg);
+    }
+    
+    #wheelSegment3 .wheel {
+      background-color: WhiteSmoke;
+      transform: rotate(120deg);
+    }
+    
+    #wheelSegment4 {
+      transform: rotate(180deg);
+    }
+    
+    #wheelSegment4 .wheel {
+      background-color: WhiteSmoke;
+      transform: rotate(180deg);
+    }
+    
+    #wheelSegment5 {
+      transform: rotate(240deg);
+    }
+    
+    #wheelSegment5 .wheel {
+      background-color: WhiteSmoke;
+      transform: rotate(120deg);
+    }
+    
+    #wheelSegment6 {
+	transform: rotate(300deg);
+    }
+    
+    #wheelSegment6 .wheel {
+	background-color: WhiteSmoke;
+	transform: rotate(60deg);
+    }
+    #pallet1 {
+     
+     }
+    
+    
+    .innerCircle {
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	background-color: GhostWhite;
+	border-radius: 100%;
+	top: 75px;
+	left: 75px; 
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.5) inset;
+	color: black;
+    }
+    .innerCircle .content {
+	position: absolute;
+	display: block;
+	width: 120px;
+	top: 30px;
+	left: 15px;
+	text-align: center;
+	font-size: 14px;
+    }
+	.grid-container {
+	padding: 50px; 
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-column-gap: 10px;
+	grid-row-gap: 50px;
+	}
+.dropLanding{
+	display: grid;
+	grid-template-columns: auto auto;
+	width: 80px;
+	height: 40px;
+	margin: 2px auto 7px;
+}	
+.mix{
+	margin-top: 5px;
+}
+.icon{
+    font-size: 40px;}
+.blue{
+    color: blue;}
+.red{
+	 color: red;}
+.yellow{
+	color: yellow;}
+.blank{
+	color: lightgrey;
+}	
+.pallet{
+    margin: auto;
+	width: 50px;
+	padding: 10px; }
+
+</style>
+<script type="text/javascript">
+	function mixColors(){
+	 var mixColor = 'white';
+	 var changeSegement = '';
+	 if((color1 == 'blue') && ((color2 == 'blue') || (color2 == 'white')) ){
+	 	mixColor = 'blue';
+	 	changeSegement = 'wheelSegment1a'; 
+	 }
+	 if(((color1 == 'blue') && (color2 == 'yellow')) || ((color1 == 'yellow') && (color2 == 'blue'))){
+		mixColor = 'green';
+		changeSegement = 'wheelSegment2a';
+	 }
+	 if((color1 == 'yellow') && ((color2 == 'yellow') || (color2 == 'white')) ){
+	 	mixColor = 'yellow';
+	 	changeSegement = 'wheelSegment3a';
+	 }
+	 if(((color1 == 'red') && (color2 == 'yellow')) || ((color1 == 'yellow') && (color2 == 'red'))){
+		mixColor = 'orange';
+		changeSegement = 'wheelSegment4a';
+	 }	 
+	 if((color1 == 'red') && ((color2 == 'red') || (color2 == 'white')) ){
+	 	mixColor = 'red';
+	 	changeSegement = 'wheelSegment5a';
+	 }
+	 if(((color1 == 'red') && (color2 == 'blue')) || ((color1 == 'blue') && (color2 == 'red'))){
+		mixColor = 'purple';
+		changeSegement = 'wheelSegment6a';
+	 }	
+
+	 return [mixColor, changeSegement];
+	}
+
+	function changeBackground() {
+	mixValues = mixColors();	
+	var newColor = mixValues[0];
+	var changeSegment = mixValues[1];
+		console.log("mixColor="+newColor)
+   document.getElementById(changeSegment).style.background = newColor;
+   document.getElementById('mixer').style.color = newColor;
+}
+function resetAll(){
+    color1 = 'white'; 
+    color2 = 'white';
+	document.getElementById('mixer').style.color = 'DarkSlateGrey';
+	var blanks = document.getElementsByClassName('blank');
+	var wheels = document.getElementsByClassName('wheel');	
+	var i;
+	for (i = 0; i < blanks.length; i++) {
+	  blanks[i].style.color = "lightgrey";
+	}
+	for (i = 0; i < wheels.length; i++) {
+	  wheels[i].style.backgroundColor = "WhiteSmoke";
+	}
+	dropToggle=false;
+}
+</script>
+</head>
+<body>
+ <header>
+<h1>Color Wheel</h1> </header>
+<p>wheelchart fun</p>
+<div class="grid-container">
+ <div class="wheelContainer">
+      <div class="wheelBackground"></div>
+      <div id="wheelSegment1" class="hold"><div id="wheelSegment1a" class="wheel wheelSegment1a"></div></div>
+      <div id="wheelSegment2" class="hold"><div id="wheelSegment2a" class="wheel"></div></div>
+      <div id="wheelSegment3" class="hold"><div id="wheelSegment3a" class="wheel"></div></div>
+      <div id="wheelSegment4" class="hold"><div id="wheelSegment4a" class="wheel"></div></div>
+      <div id="wheelSegment5" class="hold"><div id="wheelSegment5a" class="wheel"></div></div>
+      <div id="wheelSegment6" class="hold"><div id="wheelSegment6a" class="wheel"></div></div>
+      <div class="innerCircle" ondrop="dropItem(event)" ondragover="dragoverItem(event)"><div class="content">
+      	<div id='dropLanding' class="dropLanding">
+      		<div id=drop1><i class="fas fa-tint icon blank" id='drop1icon'></i></div>
+      		<div id=drop2><i class="fas fa-tint icon blank" id='drop2icon'></i></div></div>
+      	<i class="fas fa-mortar-pestle icon mix" onclick="changeBackground()" id='mixer'></i></div></div>
+    </div>
+    <div>
+    	<p>Color Pallet</p>
+    	<div id="pallet1" class='pallet' ><i class="fas fa-tint icon blue" id='blue' draggable="true" ondragstart="dragItem(event)"></i></div>
+    	<div id="pallet2" class='pallet'><i class="fas fa-tint icon red" id='red' draggable="true" ondragstart="dragItem(event)"></i></div>
+    	<div id="pallet3" class='pallet' > <i class="fas fa-tint icon yellow" id='yellow' draggable="true" ondragstart="dragItem(event)"></i></div>
+
+    </div>
+<button class="tile" onclick="resetAll()">Reset</button>
+</body>
+</html>
